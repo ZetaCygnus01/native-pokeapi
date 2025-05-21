@@ -1,33 +1,54 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import Filtro from "./filtro";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Lista() {
 const [ data, setData ] = useState([]);
 
+const handleTipoChange = (tipo) => {
+    setTipoSeleccionado(tipo);
+};
+
+<Filtro onTipoChange={handleTipoChange} />
+
+const [ tipoSeleccionado, setTipoSeleccionado ] = useState("All");
+
+const navigation = useNavigation();
+
 useEffect(() => {
     const obtenerDatos = async () => {
+        if (tipoSeleccionado === "All") {
         const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
         const json = await response.json();
         setData(json.results);
+    } else {
+        const response = await fetch(`https://pokeapi.co/api/v2/type/${tipoSeleccionado}`);
+        const json = await response.json();
+        const listaFiltrada = json.pokemon.map((p) => p.pokemon);
+        setData(listaFiltrada);
+        }   
     };
+    
     obtenerDatos();
-}, []);
+}, [tipoSeleccionado]);
 
     return (
-        <ScrollView>
-            <View style={ StyleSheet.lista}>
-                {data.map((pokemon, index) => (
-                    <View key={index} style={style.item}>
-                        <Text>{pokemon.url.split("/") [6] }</Text>
-                        <Image
-                            source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.split("/")[6]}.png` }}
-                            style={style.imagen}
-                        />
-                        <Text>{pokemon.name}</Text>
-                    </View>
-                ) ) }
-            </View>
-        </ScrollView>
+        <TouchableOpacity
+key={index}
+style={styles.item}
+onPress={() => navigation.navigate('Pokemon', { nombre: nombre
+})} // Redirige con nombre como parámetro
+>
+<Text>{pokemon.url.split("/")[6]} {index}</Text>
+<Image
+source={{ uri:
+`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokem
+on/other/official-artwork/${pokemon.url.split("/")[6]}.png` }}
+style={styles.imagen}
+/>
+<Text>{pokemon.name}</Text>
+</TouchableOpacity>
     );
 }
 
