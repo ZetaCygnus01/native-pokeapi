@@ -16,7 +16,7 @@ export default function Filtro({ onTipoChange }) {
                 <TouchableOpacity
                     key={index}
                     style={styles.button}
-                    onPress={() => onTipoChange(untipotipo)}
+                    onPress={() => onTipoChange(untipo)}
                 >
                     <Text style={styles.textoFiltro}>{untipo}</Text>
                 </TouchableOpacity>
