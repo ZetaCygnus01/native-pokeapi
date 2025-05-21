@@ -1,10 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";  
 import { createStackNavigator } from "@react-navigation/stack";
-import { AppContext } from '../context/AppContext';
+import { AppContext } from "./src/context/AppContext" 
+import { AppProvider } from './src/context/AppContext'
 
 import Aleatorios from "./src/componentes/aleatorios";
-import Capturados from "./src/componentes/capturados";
+import Capturados from './src/componentes/capturados';
 import Favoritos from "./src/componentes/favoritos";
 import Lista from "./src/componentes/lista";
 import Usuario from "./src/componentes/usuario";
